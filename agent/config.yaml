@@ -1,0 +1,15 @@
+# Toggle this to 'live' when you want to connect to the official Upwork MCP
+marketplace_mode: "gigsim"
+
+# Default to open-weight local models as required by the assignment
+active_profile: "open"
+
+profiles:
+  open:
+    router_model: "qwen2.5:3b"
+    writer_model: "qwen2.5:7b"
+    embeddings: "nomic-embed-text"
+  paid:
+    router_model: "gpt-4o-mini"
+    writer_model: "gpt-4o"
+    embeddings: "text-embedding-3-small"

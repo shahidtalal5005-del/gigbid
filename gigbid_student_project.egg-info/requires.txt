@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+pydantic
+pyyaml
+langgraph
+langchain
+langchain-mcp-adapters
+mcp
+httpx
+python-dotenv
+
+[dev]
+pytest
+pytest-asyncio
+ruff
+mypy

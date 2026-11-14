@@ -1,0 +1,11 @@
+README.md
+pyproject.toml
+agent/handoffs.py
+agent/marketplace_port.py
+agent/state.py
+gigbid_student_project.egg-info/PKG-INFO
+gigbid_student_project.egg-info/SOURCES.txt
+gigbid_student_project.egg-info/dependency_links.txt
+gigbid_student_project.egg-info/requires.txt
+gigbid_student_project.egg-info/top_level.txt
+rag/verify.py
