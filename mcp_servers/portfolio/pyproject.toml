@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gigbid-portfolio-mcp"
+version = "0.1.0"
+description = "MCP server for GigBid freelancer portfolio evidence and skills."
+requires-python = ">=3.10"
+dependencies = ["mcp[cli]>=1.0.0"]
+
+[project.scripts]
+gigbid-portfolio-mcp = "gigbid_portfolio_mcp.server:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["gigbid_portfolio_mcp*"]
+
+[tool.setuptools.package-data]
+gigbid_portfolio_mcp = ["data/*.json"]
