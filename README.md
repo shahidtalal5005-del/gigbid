@@ -5,7 +5,7 @@ GigBid is a deployed web application where a team of LangGraph agents finds free
 ## Live Submission Deliverables
 - **Live Web Application (Vercel):** https://gigbid-ruby.vercel.app
   - **Reviewer Email:** `rHXViewer@gigbid.ai`
-  - **Reviewer Password:** `gigbid2026`
+  - **Reviewer Password:** (provided in GCR private comment)
 - **Technical R&D Write-up (GitHub Pages):** https://shahidtalal5005-del.github.io/gigbid/blog.html
 - **GitHub Repository:** https://github.com/shahidtalal5005-del/gigbid
 - **Portfolio MCP Server (`uvx` One-Line Verification):**
@@ -77,7 +77,7 @@ GigBid is a deployed web application where a team of LangGraph agents finds free
 - Engineered a robust MCP tool layer bridging synthetic and live marketplace endpoints, reducing unsupported proposal claims from 3.1 to 0.4 per job.
 
 ## Setup & Deployment
-1. **Live Cloud Deployment:** Access the deployed React + TypeScript copilot at https://gigbid-ruby.vercel.app using `reviewer@gigbid.ai` / `gigbid2026`.
+1. **Live Cloud Deployment:** Access the deployed React + TypeScript copilot at https://gigbid-ruby.vercel.app using `reviewer@gigbid.ai` / (provided in GCR private comment).
 2. **Local Quickstart & API:**
    ```bash
    .venv/bin/pytest -q
