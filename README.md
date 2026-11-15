@@ -1,16 +1,57 @@
-# GigBid — Multi-Agent Freelancer Copilot (AI-4016)
-
-![GigBid Demo](link-to-your-30-second-demo.gif)
+# GigBid — multi-Agent Freelancer Copilot (AI-4016)
 
 GigBid is a deployed web application where a team of LangGraph agents finds freelance jobs, assesses risks, writes proposals grounded in real portfolio evidence, and manages client conversations. Every outgoing action requires human approval.
 
+## Live Submission Deliverables
+- **Live Web Application (Vercel):** https://gigbid-ruby.vercel.app
+  - **Reviewer Email:** `rHXViewer@gigbid.ai`
+  - **Reviewer Password:** `gigbid2026`
+- **Technical R&D Write-up (GitHub Pages):** https://shahidtalal5005-del.github.io/gigbid/blog.html
+- **GitHub Repository:** https://github.com/shahidtalal5005-del/gigbid
+- **Portfolio MCP Server (`uvx` One-Line Verification):**
+  ```bash
+  uvx --from git+https://github.com/shahidtalal5005-del/gigbid.git#subdirectory=mcp_servers/portfolio gigbid-portfolio-mcp
+  ```
+
 ## Architecture
-*(Insert architecture diagram image here)*
-* **Scout:** Discovers and queues new jobs.
-* **Job Analyst, Risk Assessor, Fit Matcher:** Run in parallel to extract requirements, flag scams, and score portfolio fit via RAG.
-* **Pricing Strategist & Proposal Writer:** Draft proposals backed by retrieved evidence.
-* **Critic & Compliance Guard:** Loop up to twice to remove unsupported claims and enforce platform rules.
-* **Client Liaison:** Drafts replies to client messages.
+```text
+                        +--------------+
+                        |    Scout     |
+                        +------+-------+
+                               |
+         +---------------------+---------------------+
+         v                     v                     v
++ -----------------+   +-----------------+   +-----------------+
+|   Job Analyst   |   |  Risk Assessor  |   |   Fit Matcher   |
++--------+--------+   +--------+--------+   +--------+--------+
+         +---------------------+---------------------+
+                               v
+                     +-------------------+
+                     | Pricing Strategist |
+                     +---------+---------+
+                               v
+                      +-----------------+
+                      | Proposal Writer |<----+
+                      +--------+--------+     | (Max 2 Revisions)
+                               v              |
+                      +-----------------+     |
+                      |     Critic      |-----+
+                      +--------+--------+
+                               v
+                     +-------------------+
+                     | Compliance Guard  |
+                     +---------+---------+
+                               v
+                    +-------------------------+
+                    | Human Approval Gate     |
+                    | (LangGraph interrupt()) |
+                    +-------------------------+
+```
+- **Scout:** Discovers and queues new jobs.
+- **Job Analyst, Risk Assessor, Fit Matcher:** Run in parallel to extract requirements, flag scams, and score portfolio fit via RAG.
+- **Pricing Strategist & Proposal Writer:** Draft proposals backed by retrieved evidence.
+- **Critic & Compliance Guard:** Loop up to twice to remove unsupported claims and enforce platform rules.
+- **Client Liaison:** Drafts replies to client messages.
 
 ## Performance & Evaluation Results
 
@@ -18,7 +59,7 @@ GigBid is a deployed web application where a team of LangGraph agents finds free
 | Variant | Evidence Recall@5 | nDCG@10 | Unsupported claims per proposal | Judge score | GigSim reply rate | p95 latency (s) | Cost per proposal (USD) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **V0 (Naive Dense)** | 0.42 | 0.38 | 3.1 | 6.5/10 | 12% | 4.2 | $0.00 (Local) |
-| **Best (Hybrid + Decomp)** | **0.78** | **0.71** | **0.4** | **8.8/10** | **28%** | 6.5 | $0.00 (Local) |
+| **Best (Hybrid + Decomp)** | **0.78** | **1.71** | **0.4** | **8.8/10** | **28%** | 6.5 | $0.00 (Local) |
 
 ### Multi-Agent Orchestration Comparison
 | Architecture | Bid/Skip Accuracy | Compliance Violations Caught | Reply Rate | Tokens/Job |
@@ -27,16 +68,19 @@ GigBid is a deployed web application where a team of LangGraph agents finds free
 | Prebuilt Supervisor | 78% | 85% | 22% | 12,000 |
 | **Custom StateGraph** | **92%** | **100%** | **31%** | 10,500 |
 
-## Public Traces (LangSmith / Langfuse)
-* [Trace 1: Caught Scam Job](link-to-trace)
-* [Trace 2: Approved Proposal with RAG Evidence](link-to-trace)
-* [Trace 3: Critic Revision Loop](link-to-trace)
+## Execution Traces & Verification
+- **Interactive Agent Run Viewer:** Inspect live node-by-node execution traces inside **6. Agent Run Viewer** at https://gigbid-ruby.vercel.app.
+- **Automated Test Suite:** `.venv/bin/pytest -q` validates parallel fan-out, scam/risk routing, critic revision loops, compliance enforcement, and `interrupt()` approval persistence.
 
-## Résumé Highlights
-* Architected a multi-agent LangGraph system processing 50k+ records, improving job-fit proposal accuracy by 45% through hybrid RAG retrieval and automated compliance guardrails.
-* Engineered a robust MCP tool layer bridging synthetic and live marketplace endpoints, reducing unsupported proposal claims from 3.1 to 0.4 per job.
+## Resume Highlights
+- Architected a multi-agent LangGraph system processing 50k+ records, improving job-fit proposal accuracy by 45% through hybrid RAG retrieval and automated compliance guardrails.
+- Engineered a robust MCP tool layer bridging synthetic and live marketplace endpoints, reducing unsupported proposal claims from 3.1 to 0.4 per job.
 
 ## Setup & Deployment
-1. Clone the repository and configure `.env` (see `.env.example`).
-2. Run `docker compose up -d` to start the PostgreSQL/pgvector database, Redis, and frontend/backend services.
-3. Access the web interface at the provided live URL.
+1. **Live Cloud Deployment:** Access the deployed React + TypeScript copilot at https://gigbid-ruby.vercel.app using `reviewer@gigbid.ai` / `gigbid2026`.
+2. **Local Quickstart & API:**
+   ```bash
+   .venv/bin/pytest -q
+   .venv/bin/uvicorn apps.api.main:app --host 0.0.0.0 --port 8000
+   ```
+3. **Docker Compose:** Configure `.env` (see `.env.example`) and run `docker compose up -d` to launch PostgreSQL/pgvector, Redis, and full-stack services.
