@@ -77,7 +77,7 @@ GigBid is a deployed web application where a team of LangGraph agents finds free
 - Engineered a robust MCP tool layer bridging synthetic and live marketplace endpoints, reducing unsupported proposal claims from 3.1 to 0.4 per job.
 
 ## Setup & Deployment
-1. **Live Cloud Deployment:** Access the deployed React + TypeScript copilot at https://gigbid-ruby.vercel.app using `reviewer@gigbid.ai` / (provided in GCR private comment).
+1. **Live Cloud Deployment:** Access the deployed React + TypeScript copilot at https://gigbid-ruby.vercel.app using (provided in GCR private comment) / (provided in GCR private comment).
 2. **Local Quickstart & API:**
    ```bash
    .venv/bin/pytest -q
